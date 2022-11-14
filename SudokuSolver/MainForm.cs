@@ -243,14 +243,12 @@ namespace SudokuSolver
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            board = solvingProc[viewIndex++];
-            WriteBoard();
-
-            if (viewIndex >= solvingProc.Count - 1)
+            if (viewIndex > solvingProc.Count - 1)
             {
                 timer.Stop();
                 initButton.Enabled = true;
                 HaveBeenSolved();
+                return;
             }
             else if (!procViewCheckBox.Checked)
             {
@@ -259,7 +257,11 @@ namespace SudokuSolver
                 board = solvingProc[solvingProc.Count - 1];
                 WriteBoard();
                 HaveBeenSolved();
+                return;
             }
+
+            board = solvingProc[viewIndex++];
+            WriteBoard();
         }
 
         private void initButton_Click(object sender, EventArgs e)
