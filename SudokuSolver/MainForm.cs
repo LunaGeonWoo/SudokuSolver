@@ -37,6 +37,7 @@ namespace SudokuSolver
         private List<int[,]> solvingProc= new List<int[,]>();
         private List<MyPoint> validCheck = new List<MyPoint>();
         private bool isSolved = false;
+        private bool finish = false;
         private int[,] board = new int[9, 9];
         private int viewIndex = 0;
 
@@ -195,6 +196,7 @@ namespace SudokuSolver
         private void HaveBeenSolved()
         {
             initButton.Enabled = true;
+            finish = true;
             rightLabel.Text = "현재로";
             leftLabel.Text = "과거로";
             integratedTrackBar.Maximum = solvingProc.Count - 1;
@@ -280,11 +282,14 @@ namespace SudokuSolver
             integratedTrackBar.Enabled = true;
             rightLabel.Text = "빠르게";
             leftLabel.Text = "느리게";
+            integratedTrackBar.Maximum = 200;
+            integratedTrackBar.Value = integratedTrackBar.Maximum;
+            finish = false;
         }
 
         private void integratedTrackBar_Scroll(object sender, EventArgs e)
         {
-            if (initButton.Enabled)
+            if (finish)
             {
                 int index = integratedTrackBar.Value;
                 board = solvingProc[index];
