@@ -84,8 +84,9 @@ namespace SudokuSolver
             int num = -1;
             if (key>=48 && key < 58) //Keypad Numer
                 num = key - 48;
-            else if(key>=96 && key < 106) //Numpad Number
+            else if(key>=96 && key < 106) //Numpad Number        
                 num = key - 96;
+            
             else // WASD
             {
                 if (key == 65)//A
@@ -100,7 +101,7 @@ namespace SudokuSolver
 
             if(num != -1)
             {
-                if (IsValid(index / 9, index % 9, num))
+                if (IsValid(index / 9, index % 9, num) || num==0)
                 {
                     cells[index].Number = num;
                     board[index / 9, index % 9] = num;
@@ -110,6 +111,13 @@ namespace SudokuSolver
                     MessageBox.Show("잘 못 입력하시지 않았는지 확인해주세요.", "입력 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void SelectNextCell(int index)
+        {
+            if(++index >= cells.Count)
+                index = 0;
+            cells[index].Button.Select();
         }
 
         private bool IsInBoard(int y, int x)
